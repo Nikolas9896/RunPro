@@ -1,13 +1,14 @@
 var express = require("express");
 var app = express();
 
+app.set("view engine", "ejs");
 
 app.get("/", (req, res) => {
 
-    res.send("The RUN PRO STARTED!");
+    res.render("landing");
 
 });
 
-app.listen(3000, () =>{
+app.listen(3000, () => {
     console.log("The RunPro Server has started!");
 });
