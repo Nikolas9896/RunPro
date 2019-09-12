@@ -1,6 +1,8 @@
 var express = require("express");
 var app = express();
+var bodyParser = require("body-parser");
 
+app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
 
 app.get("/", (req, res) => {
@@ -14,6 +16,16 @@ app.get("/races", (req, res) => {
         {name: "Run by Run", image: "https://runstyle.net/wp-content/uploads/2019/08/1200h500px-1200x480.jpg"}
     ]
     res.render("races", {races: races});
+});
+
+app.post("/races", (req, res) => {
+    //get data from form and add to races array
+    res.send("You hit The post Route!");
+    //redirect to races
+});
+
+app.get("/races/new", (req, res) => {
+    res.render("new");
 });
 
 
