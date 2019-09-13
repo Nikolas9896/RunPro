@@ -1,6 +1,6 @@
 <% include partials/header %>
 <div class="container">
-    <header class="jumbotron">
+    <header class="jumbotron mb-2">
      <div class="container">
         <h1>Welcome to RunPRO!</h1>
         <p>Create Your Competition in the World and GO! GO! GO!</p>
@@ -11,12 +11,24 @@
     </header>
 
 
+    <div class="row">
     <% races.forEach((race) => { %>
-        <div>
-            <h4><%= race.name %></h4>
-            <img src="<%=race.image %>">
-        </div>
-    <% }); %>
+        
+        
+            <div class="mb-2 col-xl-3 col-lg-4 col-md-6 col-sm-12">
+              <div class="card">
+                <div class="border-0 img-thumbnail"> 
+                    <img src="<%=race.image %>" class="border-bottom card-img-top" alt="<%= race.name %>">
+                </div>
+                <div class="card-body">
+                  <h5 class="card-title"><%= race.name %></h5>
+                  <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                  <a href="#" class="btn btn-primary">Go somewhere</a>
+                </div>
+              </div>
+            </div>
+       <% }); %>
+    </div>
 
     
 
