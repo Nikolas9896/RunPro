@@ -1,17 +1,26 @@
 <% include partials/header %>
-<h1>This is the races page!</h1>
+<div class="container">
+    <header class="jumbotron">
+     <div class="container">
+        <h1>Welcome to RunPRO!</h1>
+        <p>Create Your Competition in the World and GO! GO! GO!</p>
+        <p>
+            <a class="btn btn-primary btn-lg" href="/races/new">Add New Race</a>
+        </p>
+     </div>  
+    </header>
 
 
+    <% races.forEach((race) => { %>
+        <div>
+            <h4><%= race.name %></h4>
+            <img src="<%=race.image %>">
+        </div>
+    <% }); %>
 
-<% races.forEach((race) => { %>
-    <diva>
-        <h4><%= race.name %></h4>
-        <img src="<%=race.image %>">
-    </div>
-<% }); %>
+    
 
-<a href="/races/new">Add New Race</a>
-
-<a href="/">back to landing!</a>
+    <a href="/">back to landing!</a>
+</div>
 
 <% include partials/footer %>
