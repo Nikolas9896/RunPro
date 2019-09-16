@@ -32,6 +32,7 @@ app.get("/", (req, res) => {
     res.render("landing");
 });
 
+//INDEX - show all races
 app.get("/races", (req, res) => {
     //Get all races from DB
     Race.find({}, function(err, allRaces){
@@ -44,7 +45,7 @@ app.get("/races", (req, res) => {
 
     //res.render("races", {races: races});
 });
-
+//CREATE NEW RACE to DB
 app.post("/races", (req, res) => {
     //get data from form and add to races array
     var name = req.body.name;
@@ -59,10 +60,9 @@ app.post("/races", (req, res) => {
             res.redirect("/races");
         }
     });
-    
-   // res.redirect("/races");
 });
 
+//NEW - show form to create new race
 app.get("/races/new", (req, res) => {
     res.render("new");
 });
