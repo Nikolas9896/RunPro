@@ -15,10 +15,10 @@ var raceSchema = new mongoose.Schema({
 });
 
 var Race = mongoose.model("Race", raceSchema);
-
-Race.create({
-    name: "Львів Нова Пошта напівмарафон 2019",
-    image: "https://runstyle.net/wp-content/uploads/2018/12/np-300x300.png"
+//Create Run Race in DB
+/*Race.create({
+    name: "Run by Run",
+    image: "https://runstyle.net/wp-content/uploads/2019/08/1200h500px-1200x480.jpg"
 }, function(err, race){
     if(err){
         console.log(err);
@@ -27,20 +27,22 @@ Race.create({
         console.log(race);
     }
 });
-
-var races = [
-    {name: "Half Marathon", image: "https://runstyle.net/wp-content/uploads/2017/12/race_nation_400-257x257.png"},
-    {name: "10th Kilometers", image: "https://runstyle.net/wp-content/uploads/2018/05/npchernigiv-260x260.png"},
-    {name: "Run by Run", image: "https://runstyle.net/wp-content/uploads/2019/08/1200h500px-1200x480.jpg"}
-];
-
+*/
 app.get("/", (req, res) => {
     res.render("landing");
 });
 
 app.get("/races", (req, res) => {
-   
-    res.render("races", {races: races});
+    //Get all races from DB
+    Race.find({}, function(err, allRaces){
+        if(err){
+            console.log(err);
+        } else {
+            res.render("races", {races: allRaces});
+        }
+    });
+
+    //res.render("races", {races: races});
 });
 
 app.post("/races", (req, res) => {
