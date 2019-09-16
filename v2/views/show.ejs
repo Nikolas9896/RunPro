@@ -1,1 +1,7 @@
-<h1>This is show Template</h1>
+<% include partials/header %>
+
+<h1><%= race.name %></h1>
+<img src="<%= race.image %>">
+<p><%= race.description%></p>
+
+<% include partials/footer %>

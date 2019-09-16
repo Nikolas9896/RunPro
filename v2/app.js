@@ -70,8 +70,16 @@ app.get("/races/new", (req, res) => {
 //SHOW - show race page.
 app.get("/races/:id", (req, res) => {
     //find the race with provide id
-    //show the race page
-    res.render("show");
+    Race.findById(req.params.id, function(err, foundRace){
+        if(err)
+        {
+            console.log(err);
+        } else {
+            //render show template with the race
+            res.render("show", {race: foundRace});
+        }
+    });
+    
 });
 
 
