@@ -52,7 +52,8 @@ app.post("/races", (req, res) => {
     //get data from form and add to races array
     var name = req.body.name;
     var image = req.body.image;
-    var newRaces = {name: name, image: image}
+    var description = req.body.description;
+    var newRaces = {name: name, image: image, description: description}
     //Create a new Race and save to DB
     Race.create(newRaces, function(err, newlyCreated){
         if(err){
