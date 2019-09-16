@@ -41,7 +41,7 @@ app.get("/races", (req, res) => {
         if(err){
             console.log(err);
         } else {
-            res.render("races", {races: allRaces});
+            res.render("index", {races: allRaces});
         }
     });
 
