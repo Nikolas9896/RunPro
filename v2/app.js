@@ -11,14 +11,16 @@ app.set("view engine", "ejs");
 
 var raceSchema = new mongoose.Schema({
     name: String,
-    image: String
+    image: String,
+    description: String
 });
 
 var Race = mongoose.model("Race", raceSchema);
 //Create Run Race in DB
-/*Race.create({
+Race.create({
     name: "Run by Run",
-    image: "https://runstyle.net/wp-content/uploads/2019/08/1200h500px-1200x480.jpg"
+    image: "https://runstyle.net/wp-content/uploads/2019/08/1200h500px-1200x480.jpg",
+    description: "This is amazing challenge for all runners!"
 }, function(err, race){
     if(err){
         console.log(err);
@@ -27,7 +29,7 @@ var Race = mongoose.model("Race", raceSchema);
         console.log(race);
     }
 });
-*/
+
 app.get("/", (req, res) => {
     res.render("landing");
 });
@@ -61,11 +63,18 @@ app.post("/races", (req, res) => {
         }
     });
 });
-
 //NEW - show form to create new race
 app.get("/races/new", (req, res) => {
     res.render("new");
 });
+//SHOW - show race page.
+app.get("/races/:id", (req, res) => {
+    //find the race with provide id
+    //show the race page
+    res.send("THIS WILL BE THE SHOW PAGE");
+});
+
+
 
 
 app.listen(3000, () => {
