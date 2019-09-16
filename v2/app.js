@@ -17,18 +17,18 @@ var raceSchema = new mongoose.Schema({
 
 var Race = mongoose.model("Race", raceSchema);
 //Create Run Race in DB
-Race.create({
-    name: "Run by Run",
-    image: "https://runstyle.net/wp-content/uploads/2019/08/1200h500px-1200x480.jpg",
-    description: "This is amazing challenge for all runners!"
-}, function(err, race){
-    if(err){
-        console.log(err);
-    } else {
-        console.log("NEWLY CREATED CAMPGROUD: ");
-        console.log(race);
-    }
-});
+// Race.create({
+//     name: "Run by Run",
+//     image: "https://runstyle.net/wp-content/uploads/2019/08/1200h500px-1200x480.jpg",
+//     description: "This is amazing challenge for all runners!"
+// }, function(err, race){
+//     if(err){
+//         console.log(err);
+//     } else {
+//         console.log("NEWLY CREATED CAMPGROUD: ");
+//         console.log(race);
+//     }
+// });
 
 app.get("/", (req, res) => {
     res.render("landing");
@@ -71,7 +71,7 @@ app.get("/races/new", (req, res) => {
 app.get("/races/:id", (req, res) => {
     //find the race with provide id
     //show the race page
-    res.send("THIS WILL BE THE SHOW PAGE");
+    res.render("show");
 });
 
 
