@@ -1,9 +1,32 @@
-var express = require("express");
-var app = express();
-var bodyParser = require("body-parser");
+var express     = require("express"),
+    app         = express(),
+    bodyParser  = require("body-parser"),
+    mongoose    = require("mongoose");
 
+mongoose.connect("mongodb://localhost/run_pro");
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
+
+//SCHEMA SETUP
+
+var raceSchema = new mongoose.Schema({
+    name: String,
+    image: String
+});
+
+var Race = mongoose.model("Race", raceSchema);
+
+Race.create({
+    name: "Львів Нова Пошта напівмарафон 2019",
+    image: "https://runstyle.net/wp-content/uploads/2018/12/np-300x300.png"
+}, function(err, race){
+    if(err){
+        console.log(err);
+    } else {
+        console.log("NEWLY CREATED CAMPGROUD: ");
+        console.log(race);
+    }
+});
 
 var races = [
     {name: "Half Marathon", image: "https://runstyle.net/wp-content/uploads/2017/12/race_nation_400-257x257.png"},
