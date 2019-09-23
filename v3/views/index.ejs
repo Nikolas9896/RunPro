@@ -21,7 +21,12 @@
                 </div>
                 <div class="card-body">
                   <h5 class="card-title"><%= race.name %></h5>
-                  <p class="card-text"><%= race.description %></p>
+                  <p class="card-text">
+                    <% if(race.description.length < 70){ %>
+                      <p class="card-text"><%= race.description %> </p>
+                  <% } else { %>
+                      <p class="card-text"><%= race.description.substring(0, 70) %>...</p>
+                  <% } %>  
                   <a href="/races/<%= race._id %>" class="btn btn-primary">More Info</a>
                 </div>
               </div>
