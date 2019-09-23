@@ -2,9 +2,12 @@ var express     = require("express"),
     app         = express(),
     bodyParser  = require("body-parser"),
     mongoose    = require("mongoose"),
-    Race        = require("./models/races");
+    Race        = require("./models/race"),
+    // Comment     = require("./models/comment"),
+    // User        = require("./models/user"),
+    seedDB      = require("./seeds");
 
-
+seedDB();
 mongoose.connect("mongodb://localhost:27017/run_pro", {useNewUrlParser: true });
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
