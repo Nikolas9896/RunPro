@@ -6,8 +6,8 @@ var express     = require("express"),
     // Comment     = require("./models/comment"),
     // User        = require("./models/user"),
     seedDB      = require("./seeds");
-
-seedDB();
+//seedDB - function for create DEMO RACE.
+//seedDB();
 mongoose.connect("mongodb://localhost:27017/run_pro", {useNewUrlParser: true });
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
@@ -23,7 +23,7 @@ app.get("/races", (req, res) => {
         if(err){
             console.log(err);
         } else {
-            res.render("index", {races: allRaces});
+            res.render("races/index", {races: allRaces});
         }
     });
 
@@ -48,7 +48,7 @@ app.post("/races", (req, res) => {
 });
 //NEW - show form to create new race
 app.get("/races/new", (req, res) => {
-    res.render("new");
+    res.render("races/new");
 });
 //SHOW - show race page.
 app.get("/races/:id", (req, res) => {
@@ -59,14 +59,26 @@ app.get("/races/:id", (req, res) => {
             console.log(err);
         } else {
             //render show template with the race
-            res.render("show", {race: foundRace});
+            res.render("races/show", {race: foundRace});
         }
     });
     
 });
-
-
-
+// =====================
+// COMMENTS ROUTES
+// =====================
+app.get("/races/:id/comments/new", (req, res) => {
+    //find race by id
+    Race.findById(req.params.id, (err, race) => {
+        if(err){
+            console.log(err);
+        } else {
+            // Show Comments FORM
+            res.render("comments/new", {race: race});
+        }
+    });
+    
+});
 
 app.listen(3000, () => {
     console.log("The RunPro Server has started!");
