@@ -12,21 +12,6 @@ mongoose.connect("mongodb://localhost:27017/run_pro", {useNewUrlParser: true });
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
 
-
-//Create Run Race in DB
-// Race.create({
-//     name: "Run by Run",
-//     image: "https://runstyle.net/wp-content/uploads/2019/08/1200h500px-1200x480.jpg",
-//     description: "This is amazing challenge for all runners!"
-// }, function(err, race){
-//     if(err){
-//         console.log(err);
-//     } else {
-//         console.log("NEWLY CREATED CAMPGROUD: ");
-//         console.log(race);
-//     }
-// });
-
 app.get("/", (req, res) => {
     res.render("landing");
 });
@@ -68,7 +53,7 @@ app.get("/races/new", (req, res) => {
 //SHOW - show race page.
 app.get("/races/:id", (req, res) => {
     //find the race with provide id
-    Race.findById(req.params.id, function(err, foundRace){
+    Race.findById(req.params.id).populate("comments").exec(function(err, foundRace){
         if(err)
         {
             console.log(err);
