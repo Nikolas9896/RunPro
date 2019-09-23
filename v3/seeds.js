@@ -1,5 +1,6 @@
 var mongoose        = require("mongoose"),
-    Race            = require("./models/race");
+    Race            = require("./models/race"),
+    Comment         = require("./models/comment");
 var data = [
         {
             name:"Uzhhorod Half Marathon 2019",
@@ -36,11 +37,23 @@ function seedDB(){
             console.log("===DELETE RACES!===");
         //ADD a FEW RACES
         data.forEach((seed) => {
-        Race.create(seed, (err, data) => {
+        Race.create(seed, (err, race) => {
             if(err){
                 console.log(err);
             } else {
                 console.log("added a race");
+                Comment.create({
+                    text: "I will be the SUPER RACE! Are you READY?",
+                    author: "Mykola Hlynka"
+                }, (err, comment) => {
+                    if(err){
+                        console.log(err);
+                    } else {
+                        race.comments.push(comment);
+                        race.save();
+                        console.log("Create New Comment!");
+                    }
+                });
             }
         });
     });
