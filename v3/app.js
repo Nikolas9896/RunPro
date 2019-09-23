@@ -1,21 +1,15 @@
 var express     = require("express"),
     app         = express(),
     bodyParser  = require("body-parser"),
-    mongoose    = require("mongoose");
+    mongoose    = require("mongoose"),
+    Race        = require("./models/races");
+
 
 mongoose.connect("mongodb://localhost:27017/run_pro", {useNewUrlParser: true });
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
 
-//SCHEMA SETUP
 
-var raceSchema = new mongoose.Schema({
-    name: String,
-    image: String,
-    description: String
-});
-
-var Race = mongoose.model("Race", raceSchema);
 //Create Run Race in DB
 // Race.create({
 //     name: "Run by Run",
