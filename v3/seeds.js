@@ -34,10 +34,8 @@ function seedDB(){
             console.log(err);
         } else {
             console.log("===DELETE RACES!===");
-        }
-    });
-    //ADD a FEW RACES
-    data.forEach((seed) => {
+        //ADD a FEW RACES
+        data.forEach((seed) => {
         Race.create(seed, (err, data) => {
             if(err){
                 console.log(err);
@@ -46,6 +44,9 @@ function seedDB(){
             }
         });
     });
+        }
+    });
+    
 }
 
 module.exports = seedDB;
