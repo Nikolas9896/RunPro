@@ -1,0 +1,13 @@
+<% include ../partials/header %>
+
+<h1><%= race.name %></h1>
+<img src="<%= race.image %>">
+<p><%= race.description%></p>
+<p>
+    <a class="btn btn-outline-primary btn-sm" href="/races/<%= race._id %>/comments/new">Add New Comment</a>
+</p>
+<% race.comments.forEach((comment) => { %>
+    <p><strong><%= comment.author %></strong> - <%= comment.text %></p>
+
+<%});%>
+<% include ../partials/footer %>
