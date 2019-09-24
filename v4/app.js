@@ -3,7 +3,7 @@ var express     = require("express"),
     bodyParser  = require("body-parser"),
     mongoose    = require("mongoose"),
     Race        = require("./models/race"),
-    // Comment     = require("./models/comment"),
+    Comment     = require("./models/comment"),
     // User        = require("./models/user"),
     seedDB      = require("./seeds");
 //seedDB - function for create DEMO RACE.
@@ -79,6 +79,33 @@ app.get("/races/:id/comments/new", (req, res) => {
     });
     
 });
+
+app.post("/races/:id/comments", (req, res) => {
+    //lookup race using ID
+    Race.findById(req.params.id, (err, race) => {
+        if(err){
+            console.log(err);
+            res.redirect("/races");
+        } else {
+     //create new comment
+     Comment.create(req.body.comment, (err, comment) => {
+        if(err){
+            console.log(err);
+        } else {
+      //connect new comment to race
+            race.comments.push(comment);
+            race.save();
+            //redirect race show page   
+            res.redirect("/races/" + race._id);  
+        }
+     });
+     
+    
+        }
+    });
+    
+});
+
 
 app.listen(3000, () => {
     console.log("The RunPro Server has started!");
