@@ -87,7 +87,7 @@ app.get("/races/:id", (req, res) => {
 // =====================
 // COMMENTS ROUTES
 // =====================
-app.get("/races/:id/comments/new", (req, res) => {
+app.get("/races/:id/comments/new", isLoggin, (req, res) => {
     //find race by id
     Race.findById(req.params.id, (err, race) => {
         if(err){
@@ -167,6 +167,15 @@ app.get("/logout", (req, res) => {
     res.redirect("/races");
 });
 
+//FUNCTIONS
+function isLoggin(req, res, next){
+    if(req.isAuthenticated()){
+        return next();
+    }
+    res.redirect("/login");
+};
+
+//LAST LISTENER
 app.listen(3000, () => {
     console.log("The RunPro Server has started!");
 });
