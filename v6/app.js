@@ -161,6 +161,12 @@ app.post("/login", passport.authenticate("local", {
     res.send("Login logic!");
 });
 
+// logout route
+app.get("/logout", (req, res) => {
+    req.logout();
+    res.redirect("/races");
+});
+
 app.listen(3000, () => {
     console.log("The RunPro Server has started!");
 });
