@@ -29,7 +29,11 @@ passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
-
+//currentUser provider
+app.use((req, res, next) => {
+    res.locals.currentUser  =   req.user;
+    next();
+});
 
 //ROUTES
 app.get("/", (req, res) => {
@@ -38,12 +42,13 @@ app.get("/", (req, res) => {
 
 //INDEX - show all races
 app.get("/races", (req, res) => {
+    req.user
     //Get all races from DB
     Race.find({}, function(err, allRaces){
         if(err){
             console.log(err);
         } else {
-            res.render("races/index", {races: allRaces});
+            res.render("races/index", {races: allRaces, currentUser: req.user});
         }
     });
 
@@ -158,7 +163,7 @@ app.post("/login", passport.authenticate("local", {
     successRedirect: "/races",
     failureRedirect: "/login"   
 }), (req, res) => {
-    res.send("Login logic!");
+    
 });
 
 // logout route
