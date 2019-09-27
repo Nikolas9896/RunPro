@@ -147,6 +147,17 @@ app.post("/register", (req, res) => {
     });
 });
 
+//show login form
+app.get("/login", (req, res) => {
+    res.render("login");
+});
+
+//handling login logc
+
+app.post("/login", (req, res) => {
+    res.send("Login logic!");
+});
+
 
 app.listen(3000, () => {
     console.log("The RunPro Server has started!");
