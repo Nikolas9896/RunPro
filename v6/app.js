@@ -48,7 +48,7 @@ app.get("/races", (req, res) => {
         if(err){
             console.log(err);
         } else {
-            res.render("races/index", {races: allRaces, currentUser: req.user});
+            res.render("races/index", {races: allRaces});
         }
     });
 
