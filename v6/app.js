@@ -100,7 +100,7 @@ app.get("/races/:id/comments/new", isLoggin, (req, res) => {
     
 });
 
-app.post("/races/:id/comments", (req, res) => {
+app.post("/races/:id/comments", isLoggin, (req, res) => {
     //lookup race using ID
     Race.findById(req.params.id, (err, race) => {
         if(err){
