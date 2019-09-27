@@ -154,10 +154,12 @@ app.get("/login", (req, res) => {
 
 //handling login logc
 
-app.post("/login", (req, res) => {
+app.post("/login", passport.authenticate("local", {
+    successRedirect: "/races",
+    failureRedirect: "/login"   
+}), (req, res) => {
     res.send("Login logic!");
 });
-
 
 app.listen(3000, () => {
     console.log("The RunPro Server has started!");
