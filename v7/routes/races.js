@@ -4,7 +4,7 @@ var Race                = require("../models/race");
 
 
 //INDEX - show all races
-router.get("/races", (req, res) => {
+router.get("/", (req, res) => {
     req.user
     //Get all races from DB
     Race.find({}, function(err, allRaces){
@@ -18,7 +18,7 @@ router.get("/races", (req, res) => {
     //res.render("races", {races: races});
 });
 //CREATE NEW RACE to DB
-router.post("/races", (req, res) => {
+router.post("/", (req, res) => {
     //get data from form and add to races array
     var name = req.body.name;
     var image = req.body.image;
@@ -35,11 +35,11 @@ router.post("/races", (req, res) => {
     });
 });
 //NEW - show form to create new race
-router.get("/races/new", (req, res) => {
+router.get("/new", (req, res) => {
     res.render("races/new");
 });
 //SHOW - show race page.
-router.get("/races/:id", (req, res) => {
+router.get("/:id", (req, res) => {
     //find the race with provide id
     Race.findById(req.params.id).populate("comments").exec(function(err, foundRace){
         if(err)

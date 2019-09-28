@@ -1,12 +1,12 @@
 var express             = require("express");
-var router              = express.Router();
+var router              = express.Router({mergeParams: true});
 var Race                = require("../models/race");
 var Comment             = require("../models/comment");
 
 // =====================
 // COMMENTS ROUTES
 // =====================
-router.get("/races/:id/comments/new", isLoggin, (req, res) => {
+router.get("/new", isLoggin, (req, res) => {
     //find race by id
     Race.findById(req.params.id, (err, race) => {
         if(err){
@@ -19,7 +19,7 @@ router.get("/races/:id/comments/new", isLoggin, (req, res) => {
     
 });
 
-router.post("/races/:id/comments", isLoggin, (req, res) => {
+router.post("/", isLoggin, (req, res) => {
     //lookup race using ID
     Race.findById(req.params.id, (err, race) => {
         if(err){

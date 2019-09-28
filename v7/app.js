@@ -41,9 +41,9 @@ app.use((req, res, next) => {
     next();
 });
 
-app.use(indexRoutes);
-app.use(raceRoutes);
-app.use(commentRoutes);
+app.use("/",indexRoutes);
+app.use("/races", raceRoutes);
+app.use("/races/:id/comments", commentRoutes);
 
 
 //LAST LISTENER
