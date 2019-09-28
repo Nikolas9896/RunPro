@@ -6,6 +6,8 @@ var Comment             = require("../models/comment");
 // =====================
 // COMMENTS ROUTES
 // =====================
+
+//ROUTE: Comments New
 router.get("/new", isLoggin, (req, res) => {
     //find race by id
     Race.findById(req.params.id, (err, race) => {
@@ -18,7 +20,7 @@ router.get("/new", isLoggin, (req, res) => {
     });
     
 });
-
+//ROUTE: Comments Create
 router.post("/", isLoggin, (req, res) => {
     //lookup race using ID
     Race.findById(req.params.id, (err, race) => {
@@ -44,7 +46,7 @@ router.post("/", isLoggin, (req, res) => {
     });
     
 });
-//FUNCTIONS
+//FUNCTIONS Middleware
 function isLoggin(req, res, next){
     if(req.isAuthenticated()){
         return next();

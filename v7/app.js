@@ -9,7 +9,7 @@ var express                 = require("express"),
     User                    = require("./models/user"),
     seedDB                  = require("./seeds");
 
-
+// Requiring routes
 var commentRoutes           = require("./routes/comments"),
     raceRoutes              = require("./routes/races"),
     indexRoutes             = require("./routes/index");
@@ -41,6 +41,7 @@ app.use((req, res, next) => {
     next();
 });
 
+//User router
 app.use("/",indexRoutes);
 app.use("/races", raceRoutes);
 app.use("/races/:id/comments", commentRoutes);

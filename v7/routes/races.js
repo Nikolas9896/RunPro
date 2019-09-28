@@ -15,8 +15,9 @@ router.get("/", (req, res) => {
         }
     });
 
-    //res.render("races", {races: races});
+   
 });
+
 //CREATE NEW RACE to DB
 router.post("/", (req, res) => {
     //get data from form and add to races array
