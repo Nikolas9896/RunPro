@@ -70,7 +70,18 @@ router.get("/:id/edit" , (req, res) => {
     
 });
 // UPDATE Race ROUTE
-
+router.put("/:id", (req, res) => {
+   //find and update the correct race
+    Race.findByIdAndUpdate(req.params.id, req.body.race, (err, updatedRace) => {
+        if(err){
+            console.log(err);
+            res.redirect("/races");
+        } else {
+            res.redirect("/races/" + updatedRace._id);
+        }
+   });
+        //redirect somewhere(show page)
+});
 //FUNCTIONS Middleware
 function isLoggin(req, res, next){
     if(req.isAuthenticated()){
