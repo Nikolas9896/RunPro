@@ -60,7 +60,14 @@ router.get("/:id", (req, res) => {
 
 // EDIT Race ROUTE
 router.get("/:id/edit" , (req, res) => {
-    res.render("races/edit");
+    Race.findById(req.params.id, (err, foundRace) => {
+        if(err) {
+            res.redirect("/races");
+        } else {
+            res.render("races/edit", {race: foundRace});
+        }
+    });
+    
 });
 // UPDATE Race ROUTE
 
