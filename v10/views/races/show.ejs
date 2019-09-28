@@ -21,6 +21,9 @@
                     <small class="text-muted">
                           Create by: <%= race.author.username %>
                     </small>
+                    <div class="d-flex justify-content-start">
+                        <a class="btn btn-outline-warning btn-sm" href="/races/<%= race._id %>/edit">Edit</a>
+                    </div>
                 </div>
             <div class="card border-0 bg-light">
                     <div class="card-body border-top">
