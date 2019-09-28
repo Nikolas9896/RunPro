@@ -1,3 +1,8 @@
+var express             = require("express");
+var router              = express.Router();
+var Race                = require("../models/race");
+var comment                = require("../models/comment");
+
 // =====================
 // COMMENTS ROUTES
 // =====================
@@ -39,5 +44,13 @@ router.post("/races/:id/comments", isLoggin, (req, res) => {
     });
     
 });
+//FUNCTIONS
+function isLoggin(req, res, next){
+    if(req.isAuthenticated()){
+        return next();
+    }
+    res.redirect("/login");
+};
+
 
 module.exports  = router;

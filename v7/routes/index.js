@@ -1,5 +1,10 @@
+var express             = require("express");
+var router              = express.Router();
+var passport            = require("passport");
+var User                = require("../models/user");
+
 //ROUTES
-app.get("/", (req, res) => {
+router.get("/", (req, res) => {
     res.render("landing");
 });
 
@@ -9,11 +14,11 @@ app.get("/", (req, res) => {
 //=============
 
 //show register form
-app.get("/register", (req, res) => {
+router.get("/register", (req, res) => {
     res.render("register");
 });
 
-app.post("/register", (req, res) => {
+router.post("/register", (req, res) => {
     var newUser = new User({username: req.body.username})
     User.register(newUser, req.body.password, (err, user) => {
         if(err){
@@ -27,13 +32,13 @@ app.post("/register", (req, res) => {
 });
 
 //show login form
-app.get("/login", (req, res) => {
+router.get("/login", (req, res) => {
     res.render("login");
 });
 
 //handling login logc
 
-app.post("/login", passport.authenticate("local", {
+router.post("/login", passport.authenticate("local", {
     successRedirect: "/races",
     failureRedirect: "/login"   
 }), (req, res) => {
@@ -41,7 +46,7 @@ app.post("/login", passport.authenticate("local", {
 });
 
 // logout route
-app.get("/logout", (req, res) => {
+router.get("/logout", (req, res) => {
     req.logout();
     res.redirect("/races");
 });
