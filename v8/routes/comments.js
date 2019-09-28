@@ -33,7 +33,11 @@ router.post("/", isLoggin, (req, res) => {
         if(err){
             console.log(err);
         } else {
-      //connect new comment to race
+            //add username and id to comment
+            comment.author.id = req.user._id;
+            comment.author.username = req.user.username;
+            comment.save();
+            //connect new comment to race
             race.comments.push(comment);
             race.save();
             //redirect race show page   

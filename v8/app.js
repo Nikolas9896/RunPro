@@ -14,7 +14,7 @@ var commentRoutes           = require("./routes/comments"),
     raceRoutes              = require("./routes/races"),
     indexRoutes             = require("./routes/index");
 
-    //seedDB - function for create DEMO RACE.
+//seedDB - function for create DEMO RACE.
 //seedDB();
 mongoose.connect("mongodb://localhost:27017/run_pro", {useNewUrlParser: true });
 app.use(bodyParser.urlencoded({extended: true}));
