@@ -1,7 +1,6 @@
 var express             = require("express");
 var router              = express.Router();
 var Race                = require("../models/race");
-var comment                = require("../models/comment");
 
 
 //INDEX - show all races
