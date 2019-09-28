@@ -24,7 +24,11 @@ router.post("/", isLoggin, (req, res) => {
     var name = req.body.name;
     var image = req.body.image;
     var description = req.body.description;
-    var newRaces = {name: name, image: image, description: description}
+    var author = {
+        id: req.user._id,
+        username: req.user.username
+    }
+    var newRaces = {name: name, image: image, description: description, author: author}
     //Create a new Race and save to DB
     Race.create(newRaces, function(err, newlyCreated){
         if(err){
