@@ -57,6 +57,13 @@ router.get("/:id", (req, res) => {
     });
     
 });
+
+// EDIT Race ROUTE
+router.get("/:id/edit" , (req, res) => {
+    res.render("races/edit");
+});
+// UPDATE Race ROUTE
+
 //FUNCTIONS Middleware
 function isLoggin(req, res, next){
     if(req.isAuthenticated()){
