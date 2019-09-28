@@ -1,0 +1,43 @@
+<% include ../partials/header %>
+    
+    <header class="jumbotron mb-2">
+     <div class="container">
+        <h1>Welcome to RunPRO!</h1>
+        <p>Create Your Competition in the World and GO! GO! GO!</p>
+        <p>
+            <a class="btn btn-primary btn-lg" href="/races/new">Add New Race</a>
+        </p>
+     </div>  
+    </header>
+
+
+    <div class="row">
+    <% races.forEach((race) => { %>
+        
+        
+            <div class="mb-2 col-xl-3 col-lg-4 col-md-6 col-sm-12">
+              <div class="card">
+                <div class="border-0 img-thumbnail"> 
+                    <img src="<%=race.image %>" class="border-bottom card-img-top" alt="<%= race.name %>">
+                </div>
+                <div class="card-body">
+                  <h5 class="card-title"><%= race.name %></h5>
+                  <p class="card-text">
+                    <% if(race.description.length < 70){ %>
+                      <p class="card-text"><%= race.description %> </p>
+                  <% } else { %>
+                      <p class="card-text"><%= race.description.substring(0, 70) %>...</p>
+                  <% } %>  
+                  <a href="/races/<%= race._id %>" class="btn btn-primary">More Info</a>
+                </div>
+              </div>
+            </div>
+       <% }); %>
+    </div>
+
+    
+
+    <a href="/">back to landing!</a>
+
+
+<% include ../partials/footer %>
