@@ -19,7 +19,7 @@ router.get("/", (req, res) => {
 });
 
 //CREATE NEW RACE to DB
-router.post("/", (req, res) => {
+router.post("/", isLoggin, (req, res) => {
     //get data from form and add to races array
     var name = req.body.name;
     var image = req.body.image;
@@ -36,7 +36,7 @@ router.post("/", (req, res) => {
     });
 });
 //NEW - show form to create new race
-router.get("/new", (req, res) => {
+router.get("/new", isLoggin, (req, res) => {
     res.render("races/new");
 });
 //SHOW - show race page.
@@ -53,5 +53,13 @@ router.get("/:id", (req, res) => {
     });
     
 });
+//FUNCTIONS Middleware
+function isLoggin(req, res, next){
+    if(req.isAuthenticated()){
+        return next();
+    }
+    res.redirect("/login");
+};
+
 
 module.exports  = router;
