@@ -50,6 +50,13 @@ router.post("/", isLoggin, (req, res) => {
     });
     
 });
+
+//EDIT Comment ROUTE
+router.get("/:comment_id/edit", (req, res) => {
+    res.send("Edit Route for the Commet!");
+});
+
+
 //FUNCTIONS Middleware
 function isLoggin(req, res, next){
     if(req.isAuthenticated()){
