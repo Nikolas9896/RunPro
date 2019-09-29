@@ -82,6 +82,12 @@ router.put("/:id", (req, res) => {
    });
         //redirect somewhere(show page)
 });
+
+// DESTROY Delete Race ROUTE
+router.delete("/:id", (req, res) => {
+    res.send("You are trying to delete something!");
+});
+
 //FUNCTIONS Middleware
 function isLoggin(req, res, next){
     if(req.isAuthenticated()){
