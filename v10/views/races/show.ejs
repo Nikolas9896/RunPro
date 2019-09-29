@@ -43,6 +43,7 @@
                                         <p class="card-title"><strong><%= comment.author.username %></strong></p>
                                         <p class="card-text"><small class="text-muted">10 minutes ago </small></p>
                                     </div>
+                                <% if(currentUser && comment.author.id.equals(currentUser._id)) {%>
                                 <div class="d-flex justify-content-start mb-2">
                                     <form action="/races/<%= race._id %>/comments/<%= comment._id %>?_method=DELETE" method="POST">
                                     <a class=" text-white badge badge-warning"
@@ -50,6 +51,7 @@
                                         <button class="badge badge-danger border-0">Delete</button>
                                     </form>
                                 </div>
+                                <% } %>
                                     <p class="card-text text-justify"><%= comment.text %></p>
                                 </div> 
                           </div>
