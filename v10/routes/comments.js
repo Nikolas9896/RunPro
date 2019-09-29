@@ -53,7 +53,13 @@ router.post("/", isLoggin, (req, res) => {
 
 //EDIT Comment ROUTE
 router.get("/:comment_id/edit", (req, res) => {
-    res.send("Edit Route for the Commet!");
+    Comment.findById(req.params.comment_id, (err, foundComment) => {
+        if(err) {
+            res.redirect("back");
+        } else {
+            res.render("comments/edit", {race_id: req.params.id, comment: foundComment});
+        }
+    })
 });
 
 
