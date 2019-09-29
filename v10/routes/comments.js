@@ -62,6 +62,16 @@ router.get("/:comment_id/edit", (req, res) => {
     })
 });
 
+router.put("/:comment_id", (req, res) => {
+    Comment.findByIdAndUpdate(req.params.comment_id, req.body.comment, (err, updatedComment) => {
+        if(err){
+            res.redirect("back");
+        } else {
+           res.redirect("/races/" + req.params.id);
+        }
+    });
+});
+
 
 //FUNCTIONS Middleware
 function isLoggin(req, res, next){
