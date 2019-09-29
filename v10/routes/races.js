@@ -59,18 +59,16 @@ router.get("/:id", (req, res) => {
 });
 
 // EDIT Race ROUTE
-router.get("/:id/edit" , (req, res) => {
+router.get("/:id/edit", checkRaceOwnership, (req, res) => {
+    //is user logged in?
     Race.findById(req.params.id, (err, foundRace) => {
-        if(err) {
-            res.redirect("/races");
-        } else {
-            res.render("races/edit", {race: foundRace});
-        }
+         res.render("races/edit", {race: foundRace});
     });
+  
     
 });
 // UPDATE Race ROUTE
-router.put("/:id", (req, res) => {
+router.put("/:id", checkRaceOwnership, (req, res) => {
    //find and update the correct race
     Race.findByIdAndUpdate(req.params.id, req.body.race, (err, updatedRace) => {
         if(err){
@@ -84,7 +82,7 @@ router.put("/:id", (req, res) => {
 });
 
 // DESTROY Delete Race ROUTE
-router.delete("/:id", (req, res) => {
+router.delete("/:id", checkRaceOwnership, (req, res) => {
     Race.findByIdAndRemove(req.params.id, (err) => {
         if(err) {
             console.log(err);
@@ -103,5 +101,25 @@ function isLoggin(req, res, next){
     res.redirect("/login");
 };
 
+function checkRaceOwnership(req, res, next) {
+    //is user logged in?
+    if(req.isAuthenticated()){
+                
+        Race.findById(req.params.id, (err, foundRace) => {
+            if(err) {
+                res.redirect("back");
+            } else {
+                //does the user own the campground?
+                if(foundRace.author.id.equals(req.user._id)){
+                    next();
+                } else {
+                    res.redirect("back");
+                }
+            }
+        });
+    } else {
+        res.redirect("back");
+    }
+}
 
 module.exports  = router;
