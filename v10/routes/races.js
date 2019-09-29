@@ -85,7 +85,14 @@ router.put("/:id", (req, res) => {
 
 // DESTROY Delete Race ROUTE
 router.delete("/:id", (req, res) => {
-    res.send("You are trying to delete something!");
+    Race.findByIdAndRemove(req.params.id, (err) => {
+        if(err) {
+            console.log(err);
+            res.redirect("/races");
+        } else {
+            res.redirect("/races");
+        }
+    });
 });
 
 //FUNCTIONS Middleware
