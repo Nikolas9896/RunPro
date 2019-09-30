@@ -1,0 +1,72 @@
+<% include ../partials/header %>
+    <div class="row">
+        <div class="col-md-3">
+            <p class="lead">Race</p>
+            <ul class="list-group">
+                <li class="list-group-item active">Item 1</li>
+                <li class="list-group-item">Item 2</li>
+                <li class="list-group-item">Item 3</li>
+            </ul>
+        </div>
+    
+        <div class="col-md-9">
+            <div class="card">
+                    <img class="card-img-top" src="<%= race.image %>">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <h3 class="card-title"><%= race.name %></h3>
+                        <h4>$29.99/race</h4>
+                    </div>
+                    <p class="card-text text-justify"><%= race.description%></p>
+                    <small class="text-muted">
+                          Create by: <%= race.author.username %>
+                    </small>
+                    <% if( currentUser && race.author.id.equals(currentUser._id)) { %>
+                    <div class="d-flex justify-content-start">
+                        <a class="btn btn-outline-warning btn-sm" href="/races/<%= race._id %>/edit">Edit</a>
+                        <form class="ml-2" action="/races/<%= race._id %>?_method=DELETE" method="POST">
+                            <button class="btn btn-outline-danger btn-sm">Delete</button>
+                        </form>
+                    </div>
+                    <% } %>
+                </div>
+            <div class="card border-0 bg-light">
+                    <div class="card-body border-top">
+                        <div class="d-flex justify-content-end">
+                            <a class="btn btn-outline-primary btn-sm" href="/races/<%= race._id %>/comments/new">Add New Comment</a>
+                        </div>
+                    </div>
+                        <% race.comments.forEach((comment) => { %>
+                          <div class="card border-0 rounded-0 bg-light">  
+                                <div class="card-body border-bottom">
+                                    <div class="d-flex justify-content-between">
+                                        <p class="card-title"><strong><%= comment.author.username %></strong></p>
+                                        <p class="card-text"><small class="text-muted">10 minutes ago </small></p>
+                                    </div>
+                                <% if(currentUser && comment.author.id.equals(currentUser._id)) {%>
+                                <div class="d-flex justify-content-start mb-2">
+                                    <form action="/races/<%= race._id %>/comments/<%= comment._id %>?_method=DELETE" method="POST">
+                                    <a class=" text-white badge badge-warning"
+                                    href="/races/<%= race._id %>/comments/<%= comment._id %>/edit">Edit</a>
+                                        <button class="badge badge-danger border-0">Delete</button>
+                                    </form>
+                                </div>
+                                <% } %>
+                                    <p class="card-text text-justify"><%= comment.text %></p>
+                                </div> 
+                          </div>
+                        <%});%>
+
+                  
+               
+
+            </div>
+                    
+                    
+                
+                
+                
+            </div> 
+        </div>
+    </div>
+<% include ../partials/footer %>

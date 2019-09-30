@@ -1,0 +1,19 @@
+<% include ../partials/header %>
+
+    <h1 class="text-center my-3">Write a New Comment to <%= race.name %></h1>
+    <div class="d-flex justify-content-center"> 
+    <form action="/races/<%= race._id %>/comments" method="POST">
+            <div class="form-group">
+                <label for="text">Text comment</label>
+                <input id="text" class="form-control"name="comment[text]" type="text" placeholder="Text">
+                <small id="text" class="form-text text-muted">Please Enter your comment</small>
+            </div>
+            <div class="form-group">
+            <button type="submit" class="btn btn-primary">Add New Comment</button>
+            </div>
+        </form>
+    </div>
+    
+    <a href="/">back to landing!</a>
+
+     <% include ../partials/footer %>
