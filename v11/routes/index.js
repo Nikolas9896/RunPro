@@ -24,10 +24,11 @@ router.post("/register", (req, res) => {
     var newUser = new User({username: req.body.username})
     User.register(newUser, req.body.password, (err, user) => {
         if(err){
-            console.log(err);
-            return res.render("register");
+            req.flash("error", err.message);
+            res.redirect("/register");
         }
         passport.authenticate("local")(req, res, () => {
+            req.flash("success", "You Are Registered! Welcome to RunPRO!");
             res.redirect("/races");
         });
     });
@@ -52,13 +53,5 @@ router.get("/logout", (req, res) => {
     req.flash("success", "Logged you out!");
     res.redirect("/races");
 });
-
-//FUNCTIONS Middleware
-function isLoggin(req, res, next){
-    if(req.isAuthenticated()){
-        return next();
-    }
-    res.redirect("/login");
-};
 
 module.exports = router;
