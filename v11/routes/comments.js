@@ -42,7 +42,8 @@ router.post("/", middleware.isLoggedIn, (req, res) => {
             //connect new comment to race
             race.comments.push(comment);
             race.save();
-            //redirect race show page   
+            req.flash("success", "Your Comment Added!");
+            //redirect race show page
             res.redirect("/races/" + race._id);  
         }
      });
@@ -71,7 +72,8 @@ router.put("/:comment_id", middleware.checkRaceOwnership, (req, res) => {
             req.flash("error", err);
             res.redirect("back");
         } else {
-           res.redirect("/races/" + req.params.id);
+            req.flash("success", "Your Comment Updated!");
+            res.redirect("/races/" + req.params.id);
         }
     });
 });
@@ -83,6 +85,7 @@ router.delete("/:comment_id", middleware.checkRaceOwnership, (req, res) => {
             req.flash("error", err);
             res.redirect("back");
         } else {
+            req.flash("success", "Your Comment Deleted!");
             res.redirect("/races/" + req.params.id);
         }
     });
