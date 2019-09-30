@@ -9,7 +9,7 @@ router.get("/", (req, res) => {
     //Get all races from DB
     Race.find({}, function(err, allRaces){
         if(err){
-            req.flash("error", err);
+            req.flash("error", err.message);
             res.redirect("back");
         } else {
             res.render("races/index", {races: allRaces});
@@ -33,7 +33,7 @@ router.post("/", middleware.isLoggedIn, (req, res) => {
     //Create a new Race and save to DB
     Race.create(newRaces, function(err, newlyCreated){
         if(err){
-            req.flash("error", err);
+            req.flash("error", err.message);
             res.redirect("back");
         } else {
             //redirect to races
@@ -52,7 +52,7 @@ router.get("/:id", (req, res) => {
     Race.findById(req.params.id).populate("comments").exec(function(err, foundRace){
         if(err)
         {
-            req.flash("error", err);
+            req.flash("error", err.message);
             res.redirect("back");
         } else {
             //render show template with the race
@@ -67,7 +67,7 @@ router.get("/:id/edit", middleware.checkRaceOwnership, (req, res) => {
     //is user logged in?
     Race.findById(req.params.id, (err, foundRace) => {
         if(err){
-            req.flash("error", err);
+            req.flash("error", err.message);
             res.redirect("back");
         } else {
          res.render("races/edit", {race: foundRace});
@@ -81,7 +81,7 @@ router.put("/:id", middleware.checkRaceOwnership, (req, res) => {
    //find and update the correct race
     Race.findByIdAndUpdate(req.params.id, req.body.race, (err, updatedRace) => {
         if(err){
-            req.flash("error", err);
+            req.flash("error", err.message);
             res.redirect("/races");
         } else {
             req.flash("success", "Your Race Updated!");
@@ -95,7 +95,7 @@ router.put("/:id", middleware.checkRaceOwnership, (req, res) => {
 router.delete("/:id", middleware.checkRaceOwnership, (req, res) => {
     Race.findByIdAndRemove(req.params.id, (err) => {
         if(err) {
-            req.flash("error", err);
+            req.flash("error", err.message);
             res.redirect("/races");
         } else {
             req.flash("success", "Your Race Deleted!");

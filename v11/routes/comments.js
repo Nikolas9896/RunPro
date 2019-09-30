@@ -12,7 +12,7 @@ router.get("/new", middleware.isLoggedIn, (req, res) => {
     //find race by id
     Race.findById(req.params.id, (err, race) => {
         if(err){
-            req.flash("error", err);
+            req.flash("error", err.message);
             res.redirect("/races");
         } else {
             // Show Comments FORM
@@ -26,13 +26,13 @@ router.post("/", middleware.isLoggedIn, (req, res) => {
     //lookup race using ID
     Race.findById(req.params.id, (err, race) => {
         if(err){
-            req.flash("error", err);
+            req.flash("error", err.message);
             res.redirect("/races");
         } else {
      //create new comment
      Comment.create(req.body.comment, (err, comment) => {
         if(err){
-            req.flash("error", err);
+            req.flash("error", err.message);
             res.redirect("/races");
         } else {
             //add username and id to comment
@@ -58,7 +58,7 @@ router.post("/", middleware.isLoggedIn, (req, res) => {
 router.get("/:comment_id/edit", middleware.checkRaceOwnership, (req, res) => {
     Comment.findById(req.params.comment_id, (err, foundComment) => {
         if(err) {
-            req.flash("error", err);
+            req.flash("error", err.message);
             res.redirect("back");
         } else {
             res.render("comments/edit", {race_id: req.params.id, comment: foundComment});
@@ -69,7 +69,7 @@ router.get("/:comment_id/edit", middleware.checkRaceOwnership, (req, res) => {
 router.put("/:comment_id", middleware.checkRaceOwnership, (req, res) => {
     Comment.findByIdAndUpdate(req.params.comment_id, req.body.comment, (err, updatedComment) => {
         if(err){
-            req.flash("error", err);
+            req.flash("error", err.message);
             res.redirect("back");
         } else {
             req.flash("success", "Your Comment Updated!");
@@ -82,7 +82,7 @@ router.put("/:comment_id", middleware.checkRaceOwnership, (req, res) => {
 router.delete("/:comment_id", middleware.checkRaceOwnership, (req, res) => {
     Comment.findByIdAndRemove(req.params.comment_id, (err, deleteComment) => {
         if(err) {
-            req.flash("error", err);
+            req.flash("error", err.message);
             res.redirect("back");
         } else {
             req.flash("success", "Your Comment Deleted!");
