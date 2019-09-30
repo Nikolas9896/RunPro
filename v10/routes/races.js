@@ -1,7 +1,7 @@
 var express             = require("express");
 var router              = express.Router();
 var Race                = require("../models/race");
-
+var middleware          = require("../middleware"); //require index.js by default
 
 //INDEX - show all races
 router.get("/", (req, res) => {
@@ -19,7 +19,7 @@ router.get("/", (req, res) => {
 });
 
 //CREATE NEW RACE to DB
-router.post("/", isLoggin, (req, res) => {
+router.post("/", middleware.isLoggedIn, (req, res) => {
     //get data from form and add to races array
     var name = req.body.name;
     var image = req.body.image;
@@ -40,7 +40,7 @@ router.post("/", isLoggin, (req, res) => {
     });
 });
 //NEW - show form to create new race
-router.get("/new", isLoggin, (req, res) => {
+router.get("/new", middleware.isLoggedIn, (req, res) => {
     res.render("races/new");
 });
 //SHOW - show race page.
@@ -59,7 +59,7 @@ router.get("/:id", (req, res) => {
 });
 
 // EDIT Race ROUTE
-router.get("/:id/edit", checkRaceOwnership, (req, res) => {
+router.get("/:id/edit", middleware.checkRaceOwnership, (req, res) => {
     //is user logged in?
     Race.findById(req.params.id, (err, foundRace) => {
          res.render("races/edit", {race: foundRace});
@@ -68,7 +68,7 @@ router.get("/:id/edit", checkRaceOwnership, (req, res) => {
     
 });
 // UPDATE Race ROUTE
-router.put("/:id", checkRaceOwnership, (req, res) => {
+router.put("/:id", middleware.checkRaceOwnership, (req, res) => {
    //find and update the correct race
     Race.findByIdAndUpdate(req.params.id, req.body.race, (err, updatedRace) => {
         if(err){
@@ -82,7 +82,7 @@ router.put("/:id", checkRaceOwnership, (req, res) => {
 });
 
 // DESTROY Delete Race ROUTE
-router.delete("/:id", checkRaceOwnership, (req, res) => {
+router.delete("/:id", middleware.checkRaceOwnership, (req, res) => {
     Race.findByIdAndRemove(req.params.id, (err) => {
         if(err) {
             console.log(err);
@@ -92,34 +92,5 @@ router.delete("/:id", checkRaceOwnership, (req, res) => {
         }
     });
 });
-
-//FUNCTIONS Middleware
-function isLoggin(req, res, next){
-    if(req.isAuthenticated()){
-        return next();
-    }
-    res.redirect("/login");
-};
-
-function checkRaceOwnership(req, res, next) {
-    //is user logged in?
-    if(req.isAuthenticated()){
-                
-        Race.findById(req.params.id, (err, foundRace) => {
-            if(err) {
-                res.redirect("back");
-            } else {
-                //does the user own the campground?
-                if(foundRace.author.id.equals(req.user._id)){
-                    next();
-                } else {
-                    res.redirect("back");
-                }
-            }
-        });
-    } else {
-        res.redirect("back");
-    }
-}
 
 module.exports  = router;
