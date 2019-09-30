@@ -37,6 +37,7 @@ router.post("/", middleware.isLoggedIn, (req, res) => {
             res.redirect("back");
         } else {
             //redirect to races
+            req.flash("success", "Your Race Created!");
             res.redirect("/races");
         }
     });
@@ -83,6 +84,7 @@ router.put("/:id", middleware.checkRaceOwnership, (req, res) => {
             req.flash("error", err);
             res.redirect("/races");
         } else {
+            req.flash("success", "Your Race Updated!");
             res.redirect("/races/" + updatedRace._id);
         }
    });
@@ -96,6 +98,7 @@ router.delete("/:id", middleware.checkRaceOwnership, (req, res) => {
             req.flash("error", err);
             res.redirect("/races");
         } else {
+            req.flash("success", "Your Race Deleted!");
             res.redirect("/races");
         }
     });
