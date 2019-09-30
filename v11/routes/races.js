@@ -9,7 +9,8 @@ router.get("/", (req, res) => {
     //Get all races from DB
     Race.find({}, function(err, allRaces){
         if(err){
-            console.log(err);
+            req.flash("error", err);
+            res.redirect("back");
         } else {
             res.render("races/index", {races: allRaces});
         }
@@ -32,7 +33,8 @@ router.post("/", middleware.isLoggedIn, (req, res) => {
     //Create a new Race and save to DB
     Race.create(newRaces, function(err, newlyCreated){
         if(err){
-            console.log(err);
+            req.flash("error", err);
+            res.redirect("back");
         } else {
             //redirect to races
             res.redirect("/races");
@@ -49,7 +51,8 @@ router.get("/:id", (req, res) => {
     Race.findById(req.params.id).populate("comments").exec(function(err, foundRace){
         if(err)
         {
-            console.log(err);
+            req.flash("error", err);
+            res.redirect("back");
         } else {
             //render show template with the race
             res.render("races/show", {race: foundRace});
@@ -62,7 +65,12 @@ router.get("/:id", (req, res) => {
 router.get("/:id/edit", middleware.checkRaceOwnership, (req, res) => {
     //is user logged in?
     Race.findById(req.params.id, (err, foundRace) => {
+        if(err){
+            req.flash("error", err);
+            res.redirect("back");
+        } else {
          res.render("races/edit", {race: foundRace});
+        }
     });
   
     
@@ -72,7 +80,7 @@ router.put("/:id", middleware.checkRaceOwnership, (req, res) => {
    //find and update the correct race
     Race.findByIdAndUpdate(req.params.id, req.body.race, (err, updatedRace) => {
         if(err){
-            console.log(err);
+            req.flash("error", err);
             res.redirect("/races");
         } else {
             res.redirect("/races/" + updatedRace._id);
@@ -85,7 +93,7 @@ router.put("/:id", middleware.checkRaceOwnership, (req, res) => {
 router.delete("/:id", middleware.checkRaceOwnership, (req, res) => {
     Race.findByIdAndRemove(req.params.id, (err) => {
         if(err) {
-            console.log(err);
+            req.flash("error", err);
             res.redirect("/races");
         } else {
             res.redirect("/races");

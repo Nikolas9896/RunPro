@@ -10,18 +10,21 @@ middlewareObj.checkRaceOwnership = (req, res, next) => {
                
        Race.findById(req.params.id, (err, foundRace) => {
            if(err) {
+            req.flash("error", err);
                res.redirect("back");
            } else {
                //does the user own the campground?
                if(foundRace.author.id.equals(req.user._id)){
                    next();
                } else {
+                req.flash("error", "You don't have permission to do that");
                    res.redirect("back");
                }
            }
        });
    } else {
-       res.redirect("back");
+        req.flash("error", "You need to be logged in to do that!");
+        res.redirect("back");
    }
 }
 
@@ -54,7 +57,7 @@ middlewareObj.isLoggedIn = (req, res, next) => {
     if(req.isAuthenticated()){
         return next();
     }
-    req.flash("error", "Please Login First");
+    req.flash("error", "You need to be logged in to do that!");
     res.redirect("/login");
 }
 
