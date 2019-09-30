@@ -35,7 +35,7 @@ router.post("/register", (req, res) => {
 
 //show login form
 router.get("/login", (req, res) => {
-    res.render("login", {message: req.flash("error")});
+    res.render("login");
 });
 
 //handling login logc
@@ -49,6 +49,7 @@ router.post("/login", passport.authenticate("local", {
 // logout route
 router.get("/logout", (req, res) => {
     req.logout();
+    req.flash("success", "Logged you out!");
     res.redirect("/races");
 });
 
