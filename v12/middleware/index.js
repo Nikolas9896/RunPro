@@ -9,8 +9,8 @@ middlewareObj.checkRaceOwnership = (req, res, next) => {
    if(req.isAuthenticated()){
                
        Race.findById(req.params.id, (err, foundRace) => {
-           if(err) {
-            req.flash("error", err);
+           if(err || !foundRace) {
+            req.flash("error", "Race not found");
                res.redirect("back");
            } else {
                //does the user own the campground?
